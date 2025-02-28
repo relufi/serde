@@ -2578,11 +2578,12 @@ fn deserialize_map(
             };
             quote! {
                 __Field::#name => {
+                    let _remp = #visit;
                     if _serde::__private::Option::is_some(&#name) {
                         // return _serde::__private::Err(<__A::Error as _serde::de::Error>::duplicate_field(#deser_name));
                         continue;
                     }
-                    #name = _serde::__private::Some(#visit);
+                    #name = _serde::__private::Some(_remp);
                 }
             }
         });
@@ -2790,11 +2791,11 @@ fn deserialize_map_in_place(
             };
             quote! {
                 __Field::#name => {
+                    #visit;
                     if #name {
                         // return _serde::__private::Err(<__A::Error as _serde::de::Error>::duplicate_field(#deser_name));
                         continue;
                     }
-                    #visit;
                     #name = true;
                 }
             }
