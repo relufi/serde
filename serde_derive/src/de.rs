@@ -2579,7 +2579,8 @@ fn deserialize_map(
             quote! {
                 __Field::#name => {
                     if _serde::__private::Option::is_some(&#name) {
-                        return _serde::__private::Err(<__A::Error as _serde::de::Error>::duplicate_field(#deser_name));
+                        // return _serde::__private::Err(<__A::Error as _serde::de::Error>::duplicate_field(#deser_name));
+                        continue;
                     }
                     #name = _serde::__private::Some(#visit);
                 }
@@ -2790,7 +2791,8 @@ fn deserialize_map_in_place(
             quote! {
                 __Field::#name => {
                     if #name {
-                        return _serde::__private::Err(<__A::Error as _serde::de::Error>::duplicate_field(#deser_name));
+                        // return _serde::__private::Err(<__A::Error as _serde::de::Error>::duplicate_field(#deser_name));
+                        continue;
                     }
                     #visit;
                     #name = true;
